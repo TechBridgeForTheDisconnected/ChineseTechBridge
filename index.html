@@ -224,25 +224,27 @@
       if (chatbotInitialized) return;
       
       window.botpressWebChat.init({
-        botId: "d86f2e7d-be1d-40f5-a8bd-4c75c96ae22c",
-        clientId: "36fc36e6-f791-4b02-8086-58654242f322",
-        hostUrl: "https://cdn.botpress.cloud/webchat/v2",
-        messagingUrl: "https://messaging.botpress.cloud",
-        botName: "孫子機器人",
-        botDescription: "我是來幫助您像孫子一樣的人！",
-        composerPlaceholder: "請問有什麼需要協助？",
-        avatarUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Human-emblem-blue.svg/2048px-Human-emblem-blue.svg.png",
-        frontendVersion: "v2",
-        useSessionStorage: true,
-        theme: {
-          color: "#3B82F6",
-          backgroundColor: "#ffffff"
-        },
-        hideWidget: true,
-        disableAnimations: false,
-        showCloseButton: true,
-        enableTranscriptDownload: true
-      });
+  botId: "d86f2e7d-be1d-40f5-a8bd-4c75c96ae22c",
+  clientId: "36fc36e6-f791-4b02-8086-58654242f322",
+  hostUrl: "https://cdn.botpress.cloud/webchat/v1",
+  messagingUrl: "https://messaging.botpress.cloud",
+  botName: "孫子機器人",
+  botDescription: "我是來幫助您像孫子一樣的人！",
+  composerPlaceholder: "請問有什麼需要協助？",
+  avatarUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Human-emblem-blue.svg/2048px-Human-emblem-blue.svg.png",
+  frontendVersion: "v1",
+  useSessionStorage: true,
+  theme: {
+    color: "#3B82F6",
+    backgroundColor: "#ffffff"
+  },
+  container: "#webchat", // ✅ Mount inside your div
+  hideWidget: true,
+  disableAnimations: false,
+  showCloseButton: true,
+  enableTranscriptDownload: true
+});
+
       
       chatbotInitialized = true;
       
