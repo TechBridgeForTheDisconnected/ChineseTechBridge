@@ -97,6 +97,21 @@
       border-radius: 999px;
       cursor: pointer;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+
+    /* Chatbot container styles */
+    .bp-web-widget {
+      position: fixed !important;
+      bottom: 80px !important;
+      right: 20px !important;
+      width: 350px !important;
+      height: 500px !important;
+      border-radius: 12px !important;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2) !important;
+      overflow: hidden !important;
+      z-index: 999 !important;
+      display: none !important;
     }
 
     @keyframes fadeIn {
@@ -107,6 +122,13 @@
     @media (max-width: 768px) {
       .tab-button { padding: 10px; font-size: 0.9rem; }
       h1 { font-size: 1.5rem; }
+      .bp-web-widget {
+        width: 100% !important;
+        height: 70vh !important;
+        bottom: 0 !important;
+        right: 0 !important;
+        border-radius: 12px 12px 0 0 !important;
+      }
     }
   </style>
 </head>
@@ -170,8 +192,16 @@
   <!-- Floating Chatbot Button -->
   <button id="chatbotToggle">開啟聊天機器人</button>
 
-  <!-- Scripts -->
+  <!-- Load Botpress script first -->
+  <script src="https://cdn.botpress.cloud/webchat/v2.3/inject.js"></script>
+  
+  <!-- Then your custom scripts -->
   <script>
+    // Initialize variables
+    let botpressInitialized = false;
+    let webchatInitialized = false;
+    
+    // Tab functionality
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
 
@@ -190,35 +220,62 @@
       alert("感謝您的反饋！");
     });
 
-    // Chatbot open button logic
-    const chatbotToggle = document.getElementById("chatbotToggle");
-    chatbotToggle.addEventListener("click", () => {
-      if (window.botpress && typeof window.botpress.open === "function") {
-        window.botpress.open();
-      } else {
-        alert("聊天機器人尚未準備好，請稍後再試！");
-      }
-    });
-
-    // Botpress configuration
-    window.botpress.on("webchat:ready", () => {
-      console.log("Botpress chatbot ready.");
-    });
-
-    window.botpress.init({
-      botId: "d86f2e7d-be1d-40f5-a8bd-4c75c96ae22c",
-      clientId: "36fc36e6-f791-4b02-8086-58654242f322",
-      selector: "#webchat",
-      configuration: {
-        composerPlaceholder: "請問有什麼需要協助？",
+    // Initialize Botpress Webchat
+    function initializeBotpress() {
+      window.botpressWebChat.init({
+        botId: "d86f2e7d-be1d-40f5-a8bd-4c75c96ae22c",
+        clientId: "36fc36e6-f791-4b02-8086-58654242f322",
+        hostUrl: "https://cdn.botpress.cloud/webchat/v2",
+        messagingUrl: "https://messaging.botpress.cloud",
+        selector: "#webchat",
         botName: "孫子機器人",
         botDescription: "我是來幫助您像孫子一樣的人！",
-        color: "#3B82F6",
-        themeMode: "light",
-        radius: 1
+        composerPlaceholder: "請問有什麼需要協助？",
+        avatarUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Human-emblem-blue.svg/2048px-Human-emblem-blue.svg.png",
+        frontendVersion: "v2",
+        useSessionStorage: true,
+        theme: {
+          color: "#3B82F6",
+          backgroundColor: "#ffffff"
+        },
+        hideWidget: true, // Start with the widget hidden
+        disableAnimations: false,
+        showCloseButton: true,
+        enableTranscriptDownload: true
+      });
+      
+      botpressInitialized = true;
+    }
+
+    // Chatbot toggle functionality
+    const chatbotToggle = document.getElementById("chatbotToggle");
+    chatbotToggle.addEventListener("click", toggleChatbot);
+
+    function toggleChatbot() {
+      if (!botpressInitialized) {
+        initializeBotpress();
       }
+      
+      const webchatElement = document.querySelector('.bp-web-widget');
+      if (webchatElement) {
+        const isVisible = webchatElement.style.display === 'block';
+        webchatElement.style.display = isVisible ? 'none' : 'block';
+        chatbotToggle.textContent = isVisible ? '開啟聊天機器人' : '關閉聊天機器人';
+      } else {
+        alert("聊天機器人正在初始化，請稍候...");
+      }
+    }
+
+    // Initialize when Botpress is ready
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check if Botpress is loaded every 500ms until it's ready
+      const checkBotpress = setInterval(function() {
+        if (window.botpressWebChat) {
+          clearInterval(checkBotpress);
+          initializeBotpress();
+        }
+      }, 500);
     });
   </script>
-  <script src="https://cdn.botpress.cloud/webchat/v2.3/inject.js"></script>
 </body>
 </html>
