@@ -100,20 +100,6 @@
       z-index: 1000;
     }
 
-    /* Chatbot container styles */
-    .bp-widget-web {
-      position: fixed !important;
-      bottom: 80px !important;
-      right: 20px !important;
-      width: 350px !important;
-      height: 500px !important;
-      border-radius: 12px !important;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2) !important;
-      overflow: hidden !important;
-      z-index: 999 !important;
-      display: none;
-    }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -122,13 +108,6 @@
     @media (max-width: 768px) {
       .tab-button { padding: 10px; font-size: 0.9rem; }
       h1 { font-size: 1.5rem; }
-      .bp-widget-web {
-        width: 100% !important;
-        height: 70vh !important;
-        bottom: 0 !important;
-        right: 0 !important;
-        border-radius: 12px 12px 0 0 !important;
-      }
     }
   </style>
 </head>
@@ -173,13 +152,13 @@
   </div>
 
   <!-- Feedback -->
- <div id="feedback" class="tab-content">
-  <h2>給我們反饋</h2>
-  <form id="feedbackForm" action="mailto:techbridgeforthedisconnected@gmail.com" method="post" enctype="text/plain">
-    <textarea id="feedback" placeholder="請在此輸入您的反饋..." rows="5"></textarea>
-    <button type="submit">提交反饋</button>
-  </form>
-</div>
+  <div id="feedback" class="tab-content">
+    <h2>給我們反饋</h2>
+    <form id="feedbackForm">
+      <textarea id="feedbackText" placeholder="請在此輸入您的反饋..." rows="5"></textarea>
+      <button type="submit">提交反饋</button>
+    </form>
+  </div>
 
   <!-- Chat -->
   <div id="chat" class="tab-content">
@@ -192,11 +171,11 @@
   <!-- Floating Chatbot Button -->
   <button id="chatbotToggle">開啟聊天機器人</button>
 
-  <!-- Load Botpress script -->
+  <!-- Botpress Script -->
   <script src="https://cdn.botpress.cloud/webchat/v2.3/inject.js"></script>
-  
+
   <script>
-    // Tab functionality
+    // Tabs
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
 
@@ -209,116 +188,62 @@
       });
     });
 
-    // Feedback submission
+    // Feedback alert
     document.getElementById("feedbackForm").addEventListener("submit", function(e) {
       e.preventDefault();
       alert("感謝您的反饋！");
+      document.getElementById("feedbackText").value = "";
     });
 
-    // Initialize Botpress Webchat
-    let botpressLoaded = false;
+    // Botpress Webchat
     let chatbotInitialized = false;
     let chatbotVisible = false;
 
     function initializeChatbot() {
       if (chatbotInitialized) return;
-      
-      <script>
-  window.addEventListener("DOMContentLoaded", () => {
-    window.botpressWebChat.init({
-      botId: "d86f2e7d-be1d-40f5-a8bd-4c75c96ae22c",
-      clientId: "36fc36e6-f791-4b02-8086-58654242f322",
-      hostUrl: "https://cdn.botpress.cloud/webchat/v1",
-      messagingUrl: "https://messaging.botpress.cloud",
-      botName: "孫子機器人",
-      botDescription: "我是來幫助您像孫子一樣的人！",
-      composerPlaceholder: "請問有什麼需要協助？",
-      avatarUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Human-emblem-blue.svg/2048px-Human-emblem-blue.svg.png",
-      frontendVersion: "v1",
-      useSessionStorage: true,
-      theme: {
-        color: "#3B82F6",
-        backgroundColor: "#ffffff"
-      },
-      container: "#webchat",
-      hideWidget: true,
-      disableAnimations: false,
-      showCloseButton: true,
-      enableTranscriptDownload: true
-    });
 
-    // ⚠️ Critical: Mount the widget inside your container
-    window.botpressWebChat.mount();
+      window.botpressWebChat.init({
+        botId: "d86f2e7d-be1d-40f5-a8bd-4c75c96ae22c",
+        clientId: "36fc36e6-f791-4b02-8086-58654242f322",
+        hostUrl: "https://cdn.botpress.cloud/webchat/v1",
+        messagingUrl: "https://messaging.botpress.cloud",
+        botName: "孫子機器人",
+        botDescription: "我是來幫助您像孫子一樣的人！",
+        composerPlaceholder: "請問有什麼需要協助？",
+        avatarUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Human-emblem-blue.svg/2048px-Human-emblem-blue.svg.png",
+        frontendVersion: "v1",
+        useSessionStorage: true,
+        theme: {
+          color: "#3B82F6",
+          backgroundColor: "#ffffff"
+        },
+        container: "#webchat",
+        hideWidget: true,
+        disableAnimations: false,
+        showCloseButton: true,
+        enableTranscriptDownload: true
+      });
 
-    // Toggle chatbot visibility
-    const chatbotToggle = document.getElementById("chatbotToggle");
-    let chatVisible = false;
-    const webchat = document.getElementById('webchat');
-
-    chatbotToggle.addEventListener('click', function () {
-      chatVisible = !chatVisible;
-      webchat.style.display = chatVisible ? 'block' : 'none';
-      chatbotToggle.textContent = chatVisible ? '關閉聊天機器人' : '開啟聊天機器人';
-    });
-
-    document.querySelector('[data-tab="chat"]').addEventListener('click', function () {
-      webchat.style.display = 'block';
-      chatbotToggle.textContent = '關閉聊天機器人';
-      chatVisible = true;
-    });
-  });
-</script>
-      
+      window.botpressWebChat.mount();
       chatbotInitialized = true;
-      
-      // Give the bot a moment to initialize before attempting to toggle visibility
-      setTimeout(() => {
-        if (chatbotVisible) {
-          window.botpressWebChat.sendEvent({ type: 'show' });
-        }
-      }, 500);
     }
 
-    // Chatbot toggle functionality
-    const chatbotToggle = document.getElementById("chatbotToggle");
-    chatbotToggle.addEventListener("click", toggleChatbot);
+    document.getElementById("chatbotToggle").addEventListener("click", () => {
+      if (!chatbotInitialized) initializeChatbot();
 
-    function toggleChatbot() {
-      if (!chatbotInitialized && window.botpressWebChat) {
-        initializeChatbot();
-      }
-      
-      if (window.botpressWebChat) {
-        chatbotVisible = !chatbotVisible;
-        if (chatbotVisible) {
-          window.botpressWebChat.sendEvent({ type: 'show' });
-          chatbotToggle.textContent = '關閉聊天機器人';
-        } else {
-          window.botpressWebChat.sendEvent({ type: 'hide' });
-          chatbotToggle.textContent = '開啟聊天機器人';
-        }
-      } else {
-        alert("聊天機器人正在載入中，請稍候...");
-      }
-    }
+      chatbotVisible = !chatbotVisible;
+      window.botpressWebChat.sendEvent({ type: chatbotVisible ? 'show' : 'hide' });
+      document.getElementById("chatbotToggle").textContent = chatbotVisible ? '關閉聊天機器人' : '開啟聊天機器人';
+    });
 
-    // Check if Botpress is loaded
-    function checkBotpressLoaded() {
-      if (window.botpressWebChat && !botpressLoaded) {
-        botpressLoaded = true;
-        // Initialize but keep hidden initially
-        initializeChatbot();
-      }
-      
-      if (!botpressLoaded) {
-        setTimeout(checkBotpressLoaded, 500);
-      }
-    }
-
-    // Start checking if Botpress is loaded
-    document.addEventListener('DOMContentLoaded', function() {
-      checkBotpressLoaded();
+    // Auto-show when clicking on the "聊天機器人" tab
+    document.querySelector('[data-tab="chat"]').addEventListener("click", () => {
+      if (!chatbotInitialized) initializeChatbot();
+      chatbotVisible = true;
+      window.botpressWebChat.sendEvent({ type: 'show' });
+      document.getElementById("chatbotToggle").textContent = '關閉聊天機器人';
     });
   </script>
+
 </body>
 </html>
