@@ -6,18 +6,195 @@
   <title>科技橋梁</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    /* [Previous CSS styles remain exactly the same] */
-    /* ... */
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #f1f5f9;
+      color: #333;
+    }
+
+    h1 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #3B82F6, #60A5FA);
+      color: white;
+      padding: 20px;
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    h1 img {
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      background-color: #e2e8f0;
+      border-bottom: 2px solid #cbd5e1;
+      flex-wrap: wrap;
+    }
+
+    .tab-button {
+      padding: 15px 30px;
+      cursor: pointer;
+      font-weight: bold;
+      background: none;
+      border: none;
+      transition: background-color 0.3s;
+    }
+
+    .tab-button:hover,
+    .tab-button.active {
+      background-color: #dbeafe;
+      border-bottom: 3px solid #3B82F6;
+    }
+
+    .tab-content {
+      display: none;
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      margin-top: 20px;
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    details {
+      margin: 10px 0;
+      background-color: #f9fafb;
+      padding: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    textarea, button {
+      width: 100%;
+      max-width: 500px;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      font-size: 1rem;
+    }
+
+    #chatbotToggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #3B82F6;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 999px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+
+    /* Chatbot container styles */
+    .bp-widget-web {
+      position: fixed !important;
+      bottom: 80px !important;
+      right: 20px !important;
+      width: 350px !important;
+      height: 500px !important;
+      border-radius: 12px !important;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2) !important;
+      overflow: hidden !important;
+      z-index: 999 !important;
+      display: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .tab-button { padding: 10px; font-size: 0.9rem; }
+      h1 { font-size: 1.5rem; }
+      .bp-widget-web {
+        width: 100% !important;
+        height: 70vh !important;
+        bottom: 0 !important;
+        right: 0 !important;
+        border-radius: 12px 12px 0 0 !important;
+      }
+    }
   </style>
 </head>
 <body>
-  <!-- [Previous HTML content remains exactly the same until the scripts] -->
-  <!-- ... -->
 
-  <!-- Load Botpress script from their CDN -->
-  <script src="https://cdn.botpress.cloud/webchat/v2/inject.js"></script>
+  <h1>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Human-emblem-blue.svg/2048px-Human-emblem-blue.svg.png" alt="Logo">
+    <span>為失聯者搭建科技橋樑</span>
+  </h1>
+
+  <!-- Tab Navigation -->
+  <div class="tabs">
+    <button class="tab-button active" data-tab="about">關於我們</button>
+    <button class="tab-button" data-tab="faq">常見問題</button>
+    <button class="tab-button" data-tab="tutorials">教學</button>
+    <button class="tab-button" data-tab="feedback">反饋</button>
+    <button class="tab-button" data-tab="chat">聊天機器人</button>
+  </div>
+
+  <!-- About Us -->
+  <div id="about" class="tab-content active">
+    <h2>我們的故事</h2>
+    <p>我們是一群來自 Herricks 高中的學生，致力於幫助在科技方面遇到困難的人士。靈感來自我們其中一位成員探望住院的親戚時，發現她最大的困擾是無法使用手機聯繫家人。我們希望透過這個網站幫助長者與有障礙人士使用科技，打造更有愛的社會。</p>
+  </div>
+
+  <!-- FAQ Section -->
+  <div id="faq" class="tab-content">
+    <h2>常見問題</h2>
+    <details><summary>如何解決設備緩慢的問題？</summary><p>關閉未使用的應用程式並清除快取。</p></details>
+    <details><summary>WiFi 總是斷線怎麼辦？</summary><p>忘記網路並重新連接，或重啟路由器。</p></details>
+    <details><summary>電池耗電太快怎麼辦？</summary><p>降低亮度、關閉背景應用程式與定位服務。</p></details>
+    <details><summary>程式無反應怎麼辦？</summary><p>重新啟動設備或更新/重裝該程式。</p></details>
+    <details><summary>無法上網怎麼辦？</summary><p>請重啟您的路由器或聯絡您的網路服務供應商。</p></details>
+  </div>
+
+  <!-- Tutorials -->
+  <div id="tutorials" class="tab-content">
+    <h2>使用教學</h2>
+    <details><summary>如何進行視訊通話？</summary><p>請打開 LINE、FaceTime 或 Zoom，點選您要聯絡的人，再點選「視訊通話」。</p></details>
+    <details><summary>如何設定鬧鐘？</summary><p>開啟「時鐘」App，點選新增鬧鐘，設定時間並儲存。</p></details>
+    <details><summary>如何安裝新應用程式？</summary><p>打開 App Store 或 Google Play，搜尋您需要的 App 並點選「下載」。</p></details>
+  </div>
+
+  <!-- Feedback -->
+ <div id="feedback" class="tab-content">
+  <h2>給我們反饋</h2>
+  <form id="feedbackForm" action="mailto:techbridgeforthedisconnected@gmail.com" method="post" enctype="text/plain">
+    <textarea id="feedback" placeholder="請在此輸入您的反饋..." rows="5"></textarea>
+    <button type="submit">提交反饋</button>
+  </form>
+</div>
+
+  <!-- Chat -->
+  <div id="chat" class="tab-content">
+    <p class="mobile-notice">行動裝置使用者：請關閉聊天視窗來滾動頁面</p>
+    <div class="chat-container" style="width: 100%; height: 500px; border: 2px solid #ddd; border-radius: 10px; overflow: hidden;">
+      <div id="webchat" style="width: 100%; height: 100%;"></div>
+    </div>
+  </div>
+
+  <!-- Floating Chatbot Button -->
+  <button id="chatbotToggle">開啟聊天機器人</button>
+
+  <!-- Load Botpress script -->
+  <script src="https://cdn.botpress.cloud/webchat/v2.3/inject.js"></script>
   
-  <!-- Initialize Webchat -->
   <script>
     // Tab functionality
     const tabButtons = document.querySelectorAll('.tab-button');
@@ -38,57 +215,84 @@
       alert("感謝您的反饋！");
     });
 
-    // Chatbot functionality
-    const chatbotToggle = document.getElementById("chatbotToggle");
-    let chatVisible = false;
-    
-    // Initialize Botpress Webchat with the correct configuration
-    window.botpressWebChat.init({
-      "botId": "d86f2e7d-be1d-40f5-a8bd-4c75c96ae22c",
-      "clientId": "36fc36e6-f791-4b02-8086-58654242f322",
-      "hostUrl": "https://cdn.botpress.cloud/webchat/v2",
-      "messagingUrl": "https://messaging.botpress.cloud",
-      "botName": "孫子機器人",
-      "botDescription": "我是來幫助您像孫子一樣的人！",
-      "composerPlaceholder": "請問有什麼需要協助？",
-      "avatarUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Human-emblem-blue.svg/2048px-Human-emblem-blue.svg.png",
-      "frontendVersion": "v2",
-      "useSessionStorage": true,
-      "theme": {
-        "color": "#3B82F6",
-        "backgroundColor": "#ffffff"
-      },
-      "hideWidget": true, // Start with widget hidden
-      "disableAnimations": false,
-      "showCloseButton": true,
-      "enableTranscriptDownload": true
-    }).then(() => {
-      // Webchat is ready
-      console.log("Botpress Webchat initialized successfully");
+    // Initialize Botpress Webchat
+    let botpressLoaded = false;
+    let chatbotInitialized = false;
+    let chatbotVisible = false;
+
+    function initializeChatbot() {
+      if (chatbotInitialized) return;
       
-      // Toggle chatbot visibility
-      chatbotToggle.addEventListener('click', function() {
-        chatVisible = !chatVisible;
-        
-        if (chatVisible) {
+      window.botpressWebChat.init({
+        botId: "d86f2e7d-be1d-40f5-a8bd-4c75c96ae22c",
+        clientId: "36fc36e6-f791-4b02-8086-58654242f322",
+        hostUrl: "https://cdn.botpress.cloud/webchat/v2",
+        messagingUrl: "https://messaging.botpress.cloud",
+        botName: "孫子機器人",
+        botDescription: "我是來幫助您像孫子一樣的人！",
+        composerPlaceholder: "請問有什麼需要協助？",
+        avatarUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Human-emblem-blue.svg/2048px-Human-emblem-blue.svg.png",
+        frontendVersion: "v2",
+        useSessionStorage: true,
+        theme: {
+          color: "#3B82F6",
+          backgroundColor: "#ffffff"
+        },
+        hideWidget: true,
+        disableAnimations: false,
+        showCloseButton: true,
+        enableTranscriptDownload: true
+      });
+      
+      chatbotInitialized = true;
+      
+      // Give the bot a moment to initialize before attempting to toggle visibility
+      setTimeout(() => {
+        if (chatbotVisible) {
+          window.botpressWebChat.sendEvent({ type: 'show' });
+        }
+      }, 500);
+    }
+
+    // Chatbot toggle functionality
+    const chatbotToggle = document.getElementById("chatbotToggle");
+    chatbotToggle.addEventListener("click", toggleChatbot);
+
+    function toggleChatbot() {
+      if (!chatbotInitialized && window.botpressWebChat) {
+        initializeChatbot();
+      }
+      
+      if (window.botpressWebChat) {
+        chatbotVisible = !chatbotVisible;
+        if (chatbotVisible) {
           window.botpressWebChat.sendEvent({ type: 'show' });
           chatbotToggle.textContent = '關閉聊天機器人';
         } else {
           window.botpressWebChat.sendEvent({ type: 'hide' });
           chatbotToggle.textContent = '開啟聊天機器人';
         }
-      });
+      } else {
+        alert("聊天機器人正在載入中，請稍候...");
+      }
+    }
 
-      // Show chatbot when chat tab is clicked
-      document.querySelector('[data-tab="chat"]').addEventListener('click', function() {
-        window.botpressWebChat.sendEvent({ type: 'show' });
-        chatbotToggle.textContent = '關閉聊天機器人';
-        chatVisible = true;
-      });
-    }).catch(err => {
-      console.error("Error initializing Botpress Webchat:", err);
-      chatbotToggle.textContent = '聊天機器人載入失敗';
-      chatbotToggle.style.backgroundColor = '#ef4444';
+    // Check if Botpress is loaded
+    function checkBotpressLoaded() {
+      if (window.botpressWebChat && !botpressLoaded) {
+        botpressLoaded = true;
+        // Initialize but keep hidden initially
+        initializeChatbot();
+      }
+      
+      if (!botpressLoaded) {
+        setTimeout(checkBotpressLoaded, 500);
+      }
+    }
+
+    // Start checking if Botpress is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      checkBotpressLoaded();
     });
   </script>
 </body>
