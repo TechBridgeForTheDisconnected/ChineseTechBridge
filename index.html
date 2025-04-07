@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>为断联者搭建技术桥梁</title>
+    <title>Tech Bridge for the Disconnected</title>
     <!-- SEO Meta Tags -->
-    <meta name="description" content="为断联者搭建技术桥梁 - 获取关于互联网连接、设备缓慢等常见技术问题的帮助。">
-    <meta name="keywords" content="技术支持, 网络问题, 设备缓慢, 电池耗电快, WiFi问题">
-    <meta name="author" content="您的姓名">
+    <meta name="description" content="Tech Bridge for the Disconnected - Get help with common tech issues like internet connectivity, slow devices, and more.">
+    <meta name="keywords" content="tech support, internet issues, slow device, battery draining, wifi problems">
+    <meta name="author" content="Your Name">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <!-- Styles -->
@@ -26,33 +26,42 @@
             padding: 20px;
             margin: 0;
         }
+        /* Tab Style */
         .tabs {
             display: flex;
             justify-content: center;
-            background-color: #e5e7eb;
+            margin-top: 20px;
+            background-color: #3B82F6;
             padding: 10px;
         }
-        .tab {
-            margin: 0 10px;
+        .tab-button {
+            background-color: transparent;
+            border: 2px solid #fff;
             padding: 10px 20px;
-            background-color: #fff;
-            border-radius: 5px;
+            margin: 0 10px;
+            color: white;
+            font-size: 16px;
             cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
-        .tab:hover {
-            background-color: #d1d5db;
+        .tab-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
         }
-        .container {
-            max-width: 800px;
-            margin: 30px auto;
+        .tab-button.active {
+            background-color: white;
+            color: #3B82F6;
+        }
+        .tab-content {
+            display: none;
             padding: 20px;
-            background: white;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            background-color: white;
             border-radius: 10px;
-            transition: transform 0.3s ease;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
-        .container:hover {
-            transform: scale(1.02);
+        .tab-content.active {
+            display: block;
         }
         .dropdown {
             padding: 10px;
@@ -61,11 +70,6 @@
             border-radius: 5px;
             width: 100%;
             max-width: 400px;
-        }
-        #answer {
-            font-size: 18px;
-            color: #333;
-            margin-top: 10px;
         }
         .chat-container {
             width: 100%;
@@ -85,11 +89,13 @@
         #webchat .bpFab {
             display: none;
         }
+        /* Mobile User Notice */
         .mobile-notice {
             font-size: 14px;
             color: #666;
             margin-bottom: 10px;
         }
+        /* Dark Mode */
         .dark-mode {
             background-color: #333;
             color: #fff;
@@ -98,20 +104,22 @@
             background-color: #444;
             color: #fff;
         }
+        /* Responsive Design */
         @media (max-width: 768px) {
             .container {
                 padding: 10px;
             }
             .chat-container {
-                height: 400px;
+                height: 400px; /* Adjusted height for mobile */
             }
             h1 {
-                font-size: 24px;
+                font-size: 24px; /* Smaller heading for mobile */
             }
             .dropdown {
-                width: 100%;
+                width: 100%; /* Full width for dropdown on mobile */
             }
         }
+        /* Chatbot Toggle Button */
         #chatbotToggle {
             position: fixed;
             bottom: 20px;
@@ -129,48 +137,54 @@
     <script src="https://cdn.botpress.cloud/webchat/v2.3/inject.js"></script>
 </head>
 <body>
-    <h1>为断联者搭建技术桥梁</h1>
+    <h1>Tech Bridge for the Disconnected</h1>
+
+    <!-- Tabs Navigation -->
     <div class="tabs">
-        <div class="tab" onclick="scrollToSection('faq')">常见问题</div>
-        <div class="tab" onclick="scrollToSection('about')">关于我们</div>
-        <div class="tab" onclick="scrollToSection('chat')">聊天机器人</div>
+        <button class="tab-button active" onclick="showTab('faq')">常见问题</button>
+        <button class="tab-button" onclick="showTab('about')">关于我们</button>
+        <button class="tab-button" onclick="showTab('chatbot')">聊天机器人</button>
     </div>
 
-    <!-- FAQ -->
-    <div class="container" id="faq">
-        <details>
-            <summary>如何解决设备运行缓慢？</summary>
-            <p>关闭未使用的应用程序并清除缓存可以提高设备速度。</p>
-        </details>
-        <details>
-            <summary>为什么WiFi经常断开？</summary>
-            <p>尝试忘记网络并重新连接，或重启路由器。</p>
-        </details>
-        <details>
-            <summary>电池耗电快怎么办？</summary>
-            <p>降低屏幕亮度，关闭后台应用，并关闭定位服务。</p>
-        </details>
-        <details>
-            <summary>软件无响应怎么办？</summary>
-            <p>尝试更新或重新安装软件，并重启设备。</p>
-        </details>
-        <details>
-            <summary>没有网络连接该怎么办？</summary>
-            <p>请尝试重启路由器或联系您的网络服务提供商。</p>
-        </details>
+    <!-- Tab Contents -->
+    <div class="tab-content active" id="faq">
+        <h2>常见问题</h2>
+        <div class="container">
+            <details>
+                <summary>如何修复慢速设备？</summary>
+                <p>关闭未使用的应用程序并清除缓存，以加速设备。</p>
+            </details>
+            <details>
+                <summary>为什么我的WiFi不断断开？</summary>
+                <p>忘记网络并重新连接，或重启路由器。</p>
+            </details>
+            <details>
+                <summary>如果电池快速耗尽怎么办？</summary>
+                <p>降低屏幕亮度，关闭后台应用程序，并禁用定位服务。</p>
+            </details>
+            <details>
+                <summary>如何修复无法响应的软件？</summary>
+                <p>尝试更新或重新安装软件，并重启设备。</p>
+            </details>
+            <details>
+                <summary>没有互联网连接怎么办？</summary>
+                <p>尝试重启路由器或联系你的ISP。</p>
+            </details>
+        </div>
     </div>
 
-    <!-- About Us -->
-    <div class="container" id="about">
+    <div class="tab-content" id="about">
         <h2>关于我们</h2>
-        <p>我们致力于为那些在使用科技方面遇到障碍的人提供帮助。无论您是老年用户、远程地区居民，还是需要额外支持的人士，我们都在这里提供简单、有效的技术解决方案。</p>
+        <p>我们是一个致力于为用户提供技术支持的团队。无论是解决互联网连接问题，还是修复设备问题，我们都能为您提供专业帮助。</p>
     </div>
 
-    <!-- Chat Section -->
-    <div class="container" id="chat">
-        <p class="mobile-notice">移动用户提示：使用聊天机器人时，请退出聊天以便滚动页面。</p>
-        <div class="chat-container">
-            <div id="webchat" style="width: 100%; height: 100%;"></div>
+    <div class="tab-content" id="chatbot">
+        <h2>聊天机器人</h2>
+        <div class="container">
+            <p class="mobile-notice">移动用户：请退出聊天机器人以便向上和向下滚动!</p>
+            <div class="chat-container">
+                <div id="webchat" style="width: 100%; height: 100%;"></div>
+            </div>
         </div>
     </div>
 
@@ -179,36 +193,51 @@
 
     <!-- Scripts -->
     <script>
-        function scrollToSection(id) {
-            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-button');
+            
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
         }
 
+        // Chatbot Toggle Button
         const chatbotToggle = document.getElementById("chatbotToggle");
         chatbotToggle.addEventListener("click", () => {
-            window.botpress.open();
+            window.botpress.open(); // Open the chatbot
         });
 
-        window.botpress.on("webchat:ready", () => {
-            setTimeout(() => {
-                window.botpress.open();
-            }, 1000);
-        });
-
+        // Initialize Botpress
         window.botpress.init({
-            "botId": "d86f2e7d-be1d-40f5-a8bd-4c75c96ae22c",
-            "configuration": {
-                "composerPlaceholder": "我可以如何帮助您？（您使用的是什么设备？）",
-                "botName": "孙子",
-                "botDescription": "我在这里代替您的孙子帮助您！",
+          "botId": "d86f2e7d-be1d-40f5-a8bd-4c75c96ae22c",
+          "configuration": {
+            "composerPlaceholder": "我可以帮助你什么？（你正在使用什么设备）",
+            "botName": "Grandchild",
+            "botDescription": "我在这里代替你的孙子！",
+            "website": {},
+            "email": {
+              "title": "TechBridgeForTheDisconnected@gmail.com",
+              "link": "TechBridgeForTheDisconnected@gmail.com"
+            },
+                "phone": {},
+                "termsOfService": {},
+                "privacyPolicy": {},
                 "color": "#3B82F6",
                 "variant": "solid",
                 "themeMode": "light",
                 "fontFamily": "inter",
                 "radius": 1
-            },
-            "clientId": "36fc36e6-f791-4b02-8086-58654242f322",
-            "selector": "#webchat"
-        });
+  },
+  "clientId": "36fc36e6-f791-4b02-8086-58654242f322",
+  "selector": "#webchat"
+});
     </script>
 </body>
 </html>
