@@ -113,7 +113,7 @@
     }
 
     /* Chatbot container styles */
-    .bp-web-widget {
+    #webchat {
       position: fixed !important;
       bottom: 80px !important;
       right: 20px !important;
@@ -124,6 +124,7 @@
       overflow: hidden !important;
       z-index: 999 !important;
       display: none !important;
+      border: 1px solid #ddd !important;
     }
 
     @keyframes fadeIn {
@@ -135,7 +136,7 @@
       .tab-button { padding: 10px; font-size: 0.9rem; }
       .logo-chinese { font-size: 1.5rem; }
       .logo-english { font-size: 0.8rem; }
-      .bp-web-widget {
+      #webchat {
         width: 100% !important;
         height: 70vh !important;
         bottom: 0 !important;
@@ -189,34 +190,30 @@
   </div>
 
   <!-- Feedback -->
- <div id="feedback" class="tab-content">
-  <h2>給我們反饋</h2>
-  <form id="feedbackForm" action="mailto:techbridgeforthedisconnected@gmail.com" method="post" enctype="text/plain">
-    <textarea id="feedback" placeholder="請在此輸入您的反饋..." rows="5"></textarea>
-    <button type="submit">提交反饋</button>
-  </form>
-</div>
+  <div id="feedback" class="tab-content">
+    <h2>給我們反饋</h2>
+    <form id="feedbackForm" action="mailto:techbridgeforthedisconnected@gmail.com" method="post" enctype="text/plain">
+      <textarea id="feedback" placeholder="請在此輸入您的反饋..." rows="5"></textarea>
+      <button type="submit">提交反饋</button>
+    </form>
+  </div>
 
   <!-- Chat -->
   <div id="chat" class="tab-content">
     <p class="mobile-notice">行動裝置使用者：請關閉聊天視窗來滾動頁面</p>
     <div class="chat-container" style="width: 100%; height: 500px; border: 2px solid #ddd; border-radius: 10px; overflow: hidden;">
-      <div id="webchat" style="width: 100%; height: 100%;"></div>
+      <div id="webchat"></div>
     </div>
   </div>
 
   <!-- Floating Chatbot Button -->
   <button id="chatbotToggle">開啟聊天機器人</button>
 
-  <!-- Load Botpress script first -->
-  <script src="https://cdn.botpress.cloud/webchat/v2.3/inject.js"></script>
+  <!-- Load Botpress script -->
+  <script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
   
-  <!-- Then your custom scripts -->
+  <!-- Custom scripts -->
   <script>
-    // Initialize variables
-    let botpressInitialized = false;
-    let webchatInitialized = false;
-    
     // Tab functionality
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
@@ -236,61 +233,55 @@
       alert("感謝您的反饋！");
     });
 
-    // Initialize Botpress Webchat
-    function initializeBotpress() {
-      window.botpressWebChat.init({
-        botId: "d86f2e7d-be1d-40f5-a8bd-4c75c96ae22c",
-        clientId: "36fc36e6-f791-4b02-8086-58654242f322",
-        hostUrl: "https://cdn.botpress.cloud/webchat/v2",
-        messagingUrl: "https://messaging.botpress.cloud",
-        selector: "#webchat",
-        botName: "孫子機器人",
-        botDescription: "我是來幫助您像孫子一樣的人！",
-        composerPlaceholder: "請問有什麼需要協助？",
-        avatarUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Human-emblem-blue.svg/2048px-Human-emblem-blue.svg.png",
-        frontendVersion: "v2",
-        useSessionStorage: true,
-        theme: {
-          color: "#3B82F6",
-          backgroundColor: "#ffffff"
-        },
-        hideWidget: true, // Start with the widget hidden
-        disableAnimations: false,
-        showCloseButton: true,
-        enableTranscriptDownload: true
-      });
-      
-      botpressInitialized = true;
-    }
-
-    // Chatbot toggle functionality
+    // Chatbot functionality
     const chatbotToggle = document.getElementById("chatbotToggle");
-    chatbotToggle.addEventListener("click", toggleChatbot);
+    let chatVisible = false;
+    
+    // Initialize Botpress Webchat
+    window.botpressWebChat.init({
+      botId: "d86f2e7d-be1d-40f5-a8bd-4c75c96ae22c",
+      clientId: "36fc36e6-f791-4b02-8086-58654242f322",
+      hostUrl: "https://cdn.botpress.cloud/webchat/v1",
+      messagingUrl: "https://messaging.botpress.cloud",
+      botName: "孫子機器人",
+      botDescription: "我是來幫助您像孫子一樣的人！",
+      composerPlaceholder: "請問有什麼需要協助？",
+      avatarUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Human-emblem-blue.svg/2048px-Human-emblem-blue.svg.png",
+      frontendVersion: "v1",
+      useSessionStorage: true,
+      theme: {
+        color: "#3B82F6",
+        backgroundColor: "#ffffff"
+      },
+      hideWidget: true, // Start with widget hidden
+      disableAnimations: false,
+      showCloseButton: true,
+      enableTranscriptDownload: true
+    });
 
-    function toggleChatbot() {
-      if (!botpressInitialized) {
-        initializeBotpress();
-      }
+    // Toggle chatbot visibility
+    chatbotToggle.addEventListener('click', function() {
+      const webchat = document.getElementById('webchat');
+      chatVisible = !chatVisible;
       
-      const webchatElement = document.querySelector('.bp-web-widget');
-      if (webchatElement) {
-        const isVisible = webchatElement.style.display === 'block';
-        webchatElement.style.display = isVisible ? 'none' : 'block';
-        chatbotToggle.textContent = isVisible ? '開啟聊天機器人' : '關閉聊天機器人';
+      if (chatVisible) {
+        webchat.style.display = 'block';
+        chatbotToggle.textContent = '關閉聊天機器人';
+        window.botpressWebChat.sendEvent({ type: 'show' });
       } else {
-        alert("聊天機器人正在初始化，請稍候...");
+        webchat.style.display = 'none';
+        chatbotToggle.textContent = '開啟聊天機器人';
+        window.botpressWebChat.sendEvent({ type: 'hide' });
       }
-    }
+    });
 
-    // Initialize when Botpress is ready
-    document.addEventListener('DOMContentLoaded', function() {
-      // Check if Botpress is loaded every 500ms until it's ready
-      const checkBotpress = setInterval(function() {
-        if (window.botpressWebChat) {
-          clearInterval(checkBotpress);
-          initializeBotpress();
-        }
-      }, 500);
+    // Show chatbot when chat tab is clicked
+    document.querySelector('[data-tab="chat"]').addEventListener('click', function() {
+      const webchat = document.getElementById('webchat');
+      webchat.style.display = 'block';
+      chatbotToggle.textContent = '關閉聊天機器人';
+      window.botpressWebChat.sendEvent({ type: 'show' });
+      chatVisible = true;
     });
   </script>
 </body>
