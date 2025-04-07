@@ -1,249 +1,214 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>科技橋梁</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Roboto', sans-serif;
-      background-color: #f1f5f9;
-      color: #333;
-    }
-
-    h1 {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: linear-gradient(135deg, #3B82F6, #60A5FA);
-      color: white;
-      padding: 20px;
-      margin: 0;
-      font-size: 2rem;
-    }
-
-    h1 img {
-      height: 40px;
-      border-radius: 50%;
-    }
-
-    .tabs {
-      display: flex;
-      justify-content: center;
-      background-color: #e2e8f0;
-      border-bottom: 2px solid #cbd5e1;
-      flex-wrap: wrap;
-    }
-
-    .tab-button {
-      padding: 15px 30px;
-      cursor: pointer;
-      font-weight: bold;
-      background: none;
-      border: none;
-      transition: background-color 0.3s;
-    }
-
-    .tab-button:hover,
-    .tab-button.active {
-      background-color: #dbeafe;
-      border-bottom: 3px solid #3B82F6;
-    }
-
-    .tab-content {
-      display: none;
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-      background-color: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      margin-top: 20px;
-      animation: fadeIn 0.3s ease-in;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    details {
-      margin: 10px 0;
-      background-color: #f9fafb;
-      padding: 15px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    textarea, button {
-      width: 100%;
-      max-width: 500px;
-      margin-top: 10px;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #cbd5e1;
-      font-size: 1rem;
-    }
-
-    #chatbotToggle {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #3B82F6;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 999px;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      z-index: 1000;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (max-width: 768px) {
-      .tab-button { padding: 10px; font-size: 0.9rem; }
-      h1 { font-size: 1.5rem; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>为断联者搭建技术桥梁</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="为断联者搭建技术桥梁 - 获取关于互联网连接、设备缓慢等常见技术问题的帮助。">
+    <meta name="keywords" content="技术支持, 网络问题, 设备缓慢, 电池耗电快, WiFi问题">
+    <meta name="author" content="您的姓名">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        h1 {
+            background-color: #3B82F6;
+            color: white;
+            padding: 20px;
+            margin: 0;
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            background-color: #e5e7eb;
+            padding: 10px;
+        }
+        .tab {
+            margin: 0 10px;
+            padding: 10px 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .tab:hover {
+            background-color: #d1d5db;
+        }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+        .container:hover {
+            transform: scale(1.02);
+        }
+        .dropdown {
+            padding: 10px;
+            font-size: 16px;
+            margin: 20px 0;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 400px;
+        }
+        #answer {
+            font-size: 18px;
+            color: #333;
+            margin-top: 10px;
+        }
+        .chat-container {
+            width: 100%;
+            height: 500px;
+            margin-top: 20px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        #webchat .bpWebchat {
+            position: unset;
+            width: 100%;
+            height: 100%;
+            max-height: 100%;
+            max-width: 100%;
+        }
+        #webchat .bpFab {
+            display: none;
+        }
+        .mobile-notice {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .dark-mode {
+            background-color: #333;
+            color: #fff;
+        }
+        .dark-mode .container {
+            background-color: #444;
+            color: #fff;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            .chat-container {
+                height: 400px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            .dropdown {
+                width: 100%;
+            }
+        }
+        #chatbotToggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3B82F6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+    </style>
+    <!-- Botpress Scripts -->
+    <script src="https://cdn.botpress.cloud/webchat/v2.3/inject.js"></script>
 </head>
 <body>
-
-  <h1>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Human-emblem-blue.svg/2048px-Human-emblem-blue.svg.png" alt="Logo">
-    <span>為失聯者搭建科技橋樑</span>
-  </h1>
-
-  <!-- Tab Navigation -->
-  <div class="tabs">
-    <button class="tab-button active" data-tab="about">關於我們</button>
-    <button class="tab-button" data-tab="faq">常見問題</button>
-    <button class="tab-button" data-tab="tutorials">教學</button>
-    <button class="tab-button" data-tab="feedback">反饋</button>
-    <button class="tab-button" data-tab="chat">聊天機器人</button>
-  </div>
-
-  <!-- About Us -->
-  <div id="about" class="tab-content active">
-    <h2>我們的故事</h2>
-    <p>我們是一群來自 Herricks 高中的學生，致力於幫助在科技方面遇到困難的人士。靈感來自我們其中一位成員探望住院的親戚時，發現她最大的困擾是無法使用手機聯繫家人。我們希望透過這個網站幫助長者與有障礙人士使用科技，打造更有愛的社會。</p>
-  </div>
-
-  <!-- FAQ Section -->
-  <div id="faq" class="tab-content">
-    <h2>常見問題</h2>
-    <details><summary>如何解決設備緩慢的問題？</summary><p>關閉未使用的應用程式並清除快取。</p></details>
-    <details><summary>WiFi 總是斷線怎麼辦？</summary><p>忘記網路並重新連接，或重啟路由器。</p></details>
-    <details><summary>電池耗電太快怎麼辦？</summary><p>降低亮度、關閉背景應用程式與定位服務。</p></details>
-    <details><summary>程式無反應怎麼辦？</summary><p>重新啟動設備或更新/重裝該程式。</p></details>
-    <details><summary>無法上網怎麼辦？</summary><p>請重啟您的路由器或聯絡您的網路服務供應商。</p></details>
-  </div>
-
-  <!-- Tutorials -->
-  <div id="tutorials" class="tab-content">
-    <h2>使用教學</h2>
-    <details><summary>如何進行視訊通話？</summary><p>請打開 LINE、FaceTime 或 Zoom，點選您要聯絡的人，再點選「視訊通話」。</p></details>
-    <details><summary>如何設定鬧鐘？</summary><p>開啟「時鐘」App，點選新增鬧鐘，設定時間並儲存。</p></details>
-    <details><summary>如何安裝新應用程式？</summary><p>打開 App Store 或 Google Play，搜尋您需要的 App 並點選「下載」。</p></details>
-  </div>
-
-  <!-- Feedback -->
-  <div id="feedback" class="tab-content">
-    <h2>給我們反饋</h2>
-    <form id="feedbackForm">
-      <textarea id="feedbackText" placeholder="請在此輸入您的反饋..." rows="5"></textarea>
-      <button type="submit">提交反饋</button>
-    </form>
-  </div>
-
-  <!-- Chat -->
-  <div id="chat" class="tab-content">
-    <p class="mobile-notice">行動裝置使用者：請關閉聊天視窗來滾動頁面</p>
-    <div class="chat-container" style="width: 100%; height: 500px; border: 2px solid #ddd; border-radius: 10px; overflow: hidden;">
-      <div id="webchat" style="width: 100%; height: 100%;"></div>
+    <h1>为断联者搭建技术桥梁</h1>
+    <div class="tabs">
+        <div class="tab" onclick="scrollToSection('faq')">常见问题</div>
+        <div class="tab" onclick="scrollToSection('about')">关于我们</div>
+        <div class="tab" onclick="scrollToSection('chat')">聊天机器人</div>
     </div>
-  </div>
 
-  <!-- Floating Chatbot Button -->
-  <button id="chatbotToggle">開啟聊天機器人</button>
+    <!-- FAQ -->
+    <div class="container" id="faq">
+        <details>
+            <summary>如何解决设备运行缓慢？</summary>
+            <p>关闭未使用的应用程序并清除缓存可以提高设备速度。</p>
+        </details>
+        <details>
+            <summary>为什么WiFi经常断开？</summary>
+            <p>尝试忘记网络并重新连接，或重启路由器。</p>
+        </details>
+        <details>
+            <summary>电池耗电快怎么办？</summary>
+            <p>降低屏幕亮度，关闭后台应用，并关闭定位服务。</p>
+        </details>
+        <details>
+            <summary>软件无响应怎么办？</summary>
+            <p>尝试更新或重新安装软件，并重启设备。</p>
+        </details>
+        <details>
+            <summary>没有网络连接该怎么办？</summary>
+            <p>请尝试重启路由器或联系您的网络服务提供商。</p>
+        </details>
+    </div>
 
-  <!-- Botpress Script -->
-  <script src="https://cdn.botpress.cloud/webchat/v2.3/inject.js"></script>
+    <!-- About Us -->
+    <div class="container" id="about">
+        <h2>关于我们</h2>
+        <p>我们致力于为那些在使用科技方面遇到障碍的人提供帮助。无论您是老年用户、远程地区居民，还是需要额外支持的人士，我们都在这里提供简单、有效的技术解决方案。</p>
+    </div>
 
-  <script>
-    // Tabs
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const tabContents = document.querySelectorAll('.tab-content');
+    <!-- Chat Section -->
+    <div class="container" id="chat">
+        <p class="mobile-notice">移动用户提示：使用聊天机器人时，请退出聊天以便滚动页面。</p>
+        <div class="chat-container">
+            <div id="webchat" style="width: 100%; height: 100%;"></div>
+        </div>
+    </div>
 
-    tabButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        tabButtons.forEach(b => b.classList.remove('active'));
-        tabContents.forEach(c => c.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById(btn.dataset.tab).classList.add('active');
-      });
-    });
+    <!-- Chatbot Toggle Button -->
+    <button id="chatbotToggle">打开聊天机器人</button>
 
-    // Feedback alert
-    document.getElementById("feedbackForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      alert("感謝您的反饋！");
-      document.getElementById("feedbackText").value = "";
-    });
+    <!-- Scripts -->
+    <script>
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
 
-    // Botpress Webchat
-    let chatbotInitialized = false;
-    let chatbotVisible = false;
+        const chatbotToggle = document.getElementById("chatbotToggle");
+        chatbotToggle.addEventListener("click", () => {
+            window.botpress.open();
+        });
 
-    function initializeChatbot() {
-      if (chatbotInitialized) return;
+        window.botpress.on("webchat:ready", () => {
+            setTimeout(() => {
+                window.botpress.open();
+            }, 1000);
+        });
 
-      window.botpressWebChat.init({
-        botId: "d86f2e7d-be1d-40f5-a8bd-4c75c96ae22c",
-        clientId: "36fc36e6-f791-4b02-8086-58654242f322",
-        hostUrl: "https://cdn.botpress.cloud/webchat/v1",
-        messagingUrl: "https://messaging.botpress.cloud",
-        botName: "孫子機器人",
-        botDescription: "我是來幫助您像孫子一樣的人！",
-        composerPlaceholder: "請問有什麼需要協助？",
-        avatarUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Human-emblem-blue.svg/2048px-Human-emblem-blue.svg.png",
-        frontendVersion: "v1",
-        useSessionStorage: true,
-        theme: {
-          color: "#3B82F6",
-          backgroundColor: "#ffffff"
-        },
-        container: "#webchat",
-        hideWidget: true,
-        disableAnimations: false,
-        showCloseButton: true,
-        enableTranscriptDownload: true
-      });
-
-      window.botpressWebChat.mount();
-      chatbotInitialized = true;
-    }
-
-    document.getElementById("chatbotToggle").addEventListener("click", () => {
-      if (!chatbotInitialized) initializeChatbot();
-
-      chatbotVisible = !chatbotVisible;
-      window.botpressWebChat.sendEvent({ type: chatbotVisible ? 'show' : 'hide' });
-      document.getElementById("chatbotToggle").textContent = chatbotVisible ? '關閉聊天機器人' : '開啟聊天機器人';
-    });
-
-    // Auto-show when clicking on the "聊天機器人" tab
-    document.querySelector('[data-tab="chat"]').addEventListener("click", () => {
-      if (!chatbotInitialized) initializeChatbot();
-      chatbotVisible = true;
-      window.botpressWebChat.sendEvent({ type: 'show' });
-      document.getElementById("chatbotToggle").textContent = '關閉聊天機器人';
-    });
-  </script>
-
+        window.botpress.init({
+            "botId": "d86f2e7d-be1d-40f5-a8bd-4c75c96ae22c",
+            "configuration": {
+                "composerPlaceholder": "我可以如何帮助您？（您使用的是什么设备？）",
+                "botName": "孙子",
+                "botDescription": "我在这里代替您的孙子帮助您！",
+                "color": "#3B82F6",
+                "variant": "solid",
+                "themeMode": "light",
+                "fontFamily": "inter",
+                "radius": 1
+            },
+            "clientId": "36fc36e6-f791-4b02-8086-58654242f322",
+            "selector": "#webchat"
+        });
+    </script>
 </body>
 </html>
