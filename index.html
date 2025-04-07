@@ -1,201 +1,117 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>科技橋梁</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Roboto', sans-serif;
-      background-color: #f1f5f9;
-      color: #333;
-    }
-
-    h1 {
-      background: linear-gradient(135deg, #3B82F6, #60A5FA);
-      color: white;
-      padding: 20px;
-      margin: 0;
-      font-size: 2rem;
-    }
-
-    .tabs {
-      display: flex;
-      justify-content: center;
-      background-color: #e2e8f0;
-      border-bottom: 2px solid #cbd5e1;
-    }
-
-    .tab-button {
-      padding: 15px 30px;
-      cursor: pointer;
-      font-weight: bold;
-      background: none;
-      border: none;
-      transition: background-color 0.3s;
-    }
-
-    .tab-button:hover,
-    .tab-button.active {
-      background-color: #dbeafe;
-      border-bottom: 3px solid #3B82F6;
-    }
-
-    .tab-content {
-      display: none;
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-      background-color: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      margin-top: 20px;
-      animation: fadeIn 0.3s ease-in;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    details {
-      margin: 10px 0;
-      background-color: #f9fafb;
-      padding: 15px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    textarea, button {
-      width: 100%;
-      max-width: 500px;
-      margin-top: 10px;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #cbd5e1;
-      font-size: 1rem;
-    }
-
-    #chatbotToggle {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #3B82F6;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 999px;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (max-width: 768px) {
-      .tab-button { padding: 10px; font-size: 0.9rem; }
-      h1 { font-size: 1.5rem; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>科技連接橋</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            background-color: #3B82F6;
+            color: white;
+            padding: 20px;
+            margin: 0;
+        }
+        /* Tab Navigation */
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            background-color: #3B82F6;
+        }
+        .tab {
+            padding: 15px 30px;
+            cursor: pointer;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        .tab:hover {
+            background-color: #2563EB;
+        }
+        .tab.active {
+            background-color: #1E40AF;
+        }
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin: 20px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        /* Logo */
+        .logo {
+            width: 100px;
+            margin: 20px auto;
+        }
+    </style>
 </head>
 <body>
-
-  <h1>為失聯者搭建科技橋樑</h1>
-
-  <!-- Tab Navigation -->
-  <div class="tabs">
-    <button class="tab-button active" data-tab="about">關於我們</button>
-    <button class="tab-button" data-tab="faq">常見問題</button>
-    <button class="tab-button" data-tab="feedback">反饋</button>
-    <button class="tab-button" data-tab="chat">聊天機器人</button>
-  </div>
-
-  <!-- About Us -->
-  <div id="about" class="tab-content active">
-    <h2>我們的故事</h2>
-    <p>我們是一群來自 Herricks 高中的學生，致力於幫助在科技方面遇到困難的人士。靈感來自我們其中一位成員探望住院的親戚時，發現她最大的困擾是無法使用手機聯繫家人。我們希望透過這個網站幫助長者與有障礙人士使用科技，打造更有愛的社會。</p>
-  </div>
-
-  <!-- FAQ Section -->
-  <div id="faq" class="tab-content">
-    <h2>常見問題</h2>
-    <details><summary>如何解決設備緩慢的問題？</summary><p>關閉未使用的應用程式並清除快取。</p></details>
-    <details><summary>WiFi 總是斷線怎麼辦？</summary><p>忘記網路並重新連接，或重啟路由器。</p></details>
-    <details><summary>電池耗電太快怎麼辦？</summary><p>降低亮度、關閉背景應用程式與定位服務。</p></details>
-    <details><summary>程式無反應怎麼辦？</summary><p>重新啟動設備或更新/重裝該程式。</p></details>
-    <details><summary>無法上網怎麼辦？</summary><p>請重啟您的路由器或聯絡您的網路服務供應商。</p></details>
-  </div>
-
-  <!-- Feedback -->
-  <div id="feedback" class="tab-content">
-    <h2>給我們反饋</h2>
-    <form id="feedbackForm">
-      <textarea id="feedback" placeholder="請在此輸入您的反饋..." rows="5"></textarea>
-      <button type="submit">提交反饋</button>
-    </form>
-  </div>
-
-  <!-- Chat -->
-  <div id="chat" class="tab-content">
-    <p class="mobile-notice">行動裝置使用者：請關閉聊天視窗來滾動頁面</p>
-    <div class="chat-container" style="width: 100%; height: 500px; border: 2px solid #ddd; border-radius: 10px; overflow: hidden;">
-      <div id="webchat" style="width: 100%; height: 100%;"></div>
+    <h1>科技連接橋</h1>
+    <img src="logo.png" alt="科技連接橋標誌" class="logo">
+    <div class="tab-container">
+        <div class="tab active" onclick="openTab(event, 'about')">關於我們</div>
+        <div class="tab" onclick="openTab(event, 'tutorials')">教程</div>
+        <div class="tab" onclick="openTab(event, 'faqs')">常見問題</div>
     </div>
-  </div>
-
-  <button id="chatbotToggle">開啟聊天機器人</button>
-
-  <!-- Scripts -->
-  <script>
-    // Tab functionality
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const tabContents = document.querySelectorAll('.tab-content');
-
-    tabButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        tabButtons.forEach(b => b.classList.remove('active'));
-        tabContents.forEach(c => c.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById(btn.dataset.tab).classList.add('active');
-      });
-    });
-
-    // Feedback
-    document.getElementById("feedbackForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      alert("感謝您的反饋！");
-    });
-
-    // Chatbot Button
-    const chatbotToggle = document.getElementById("chatbotToggle");
-    chatbotToggle.addEventListener("click", () => {
-      window.botpress.open();
-    });
-
-    // Botpress Init
-    window.botpress.on("webchat:ready", () => {
-      setTimeout(() => {
-        window.botpress.open();
-      }, 1000);
-    });
-
-    window.botpress.init({
-      botId: "d86f2e7d-be1d-40f5-a8bd-4c75c96ae22c",
-      clientId: "36fc36e6-f791-4b02-8086-58654242f322",
-      selector: "#webchat",
-      configuration: {
-        composerPlaceholder: "請問有什麼需要協助？",
-        botName: "孫子機器人",
-        botDescription: "我是來幫助您像孫子一樣的人！",
-        color: "#3B82F6",
-        themeMode: "light",
-        radius: 1
-      }
-    });
-  </script>
-  <script src="https://cdn.botpress.cloud/webchat/v2.3/inject.js"></script>
+    <div id="about" class="tab-content active">
+        <h2>關於我們</h2>
+        <p>我們是一群來自赫里克斯高中的高中生，致力於幫助在科技方面有困難的人。靈感來自我們的一位成員，他在醫院探望親戚時，發現她最大的問題是不了解如何使用手機聯繫家人。這促使我們決定幫助老年人和有障礙的人士使用科技。</p>
+    </div>
+    <div id="tutorials" class="tab-content">
+        <h2>教程</h2>
+        <p>在這裡，我們將提供各種教程，幫助您解決常見的科技問題。</p>
+    </div>
+    <div id="faqs" class="tab-content">
+        <h2>常見問題</h2>
+        <details>
+            <summary>如何解決設備運行緩慢的問題？</summary>
+            <p>關閉未使用的應用程序並清除緩存可以加快設備速度。</p>
+        </details>
+        <details>
+            <summary>為什麼我的WiFi經常斷線？</summary>
+            <p>忘記該網絡並重新連接，或重新啟動路由器。</p>
+        </details>
+        <details>
+            <summary>如果電池耗電快，我該怎麼辦？</summary>
+            <p>降低屏幕亮度，關閉後台應用程序，並禁用定位服務。</p>
+        </details>
+        <details>
+            <summary>軟件無響應時該怎麼辦？</summary>
+            <p>嘗試更新或重新安裝該軟件，並重新啟動設備。</p>
+        </details>
+        <details>
+            <summary>如果沒有網絡連接，我應該怎麼辦？</summary>
+            <p>嘗試重新啟動路由器或聯繫您的網絡服務提供商。</p>
+        </details>
+    </div>
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById(tabName).style.display = "block";
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
 </body>
 </html>
