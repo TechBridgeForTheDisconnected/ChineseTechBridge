@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>把把把 Tech Bridge for the Disconnected</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Tech Bridge for the Disconnected - 獲得關於網路連線、設備慢速等常見技術問題的採訪和協助。">
+    <meta name="keywords" content="技術支援, 網路問題, 設備慢速, 電池耗盡, wifi 問題">
+    <meta name="author" content="Herricks High School 學生群組">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        h1 {
+            background-color: #3B82F6;
+            color: white;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+        .container:hover {
+            transform: scale(1.02);
+        }
+        .dropdown {
+            padding: 10px;
+            font-size: 16px;
+            margin: 20px 0;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 400px;
+        }
+        #answer {
+            font-size: 18px;
+            color: #333;
+            margin-top: 10px;
+        }
+        .chat-container {
+            width: 100%;
+            height: 500px;
+            margin-top: 20px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        #webchat .bpWebchat {
+            position: unset;
+            width: 100%;
+            height: 100%;
+            max-height: 100%;
+            max-width: 100%;
+        }
+        #webchat .bpFab {
+            display: none;
+        }
+        .mobile-notice {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .dark-mode {
+            background-color: #333;
+            color: #fff;
+        }
+        .dark-mode .container {
+            background-color: #444;
+            color: #fff;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            .chat-container {
+                height: 400px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            .dropdown {
+                width: 100%;
+            }
+        }
+        #chatbotToggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3B82F6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+    </style>
+    <script src="https://cdn.botpress.cloud/webchat/v2.3/inject.js"></script>
+</head>
+<body>
+    <h1>把把把 Tech Bridge for the Disconnected</h1>
+
+    <div class="container">
+        <h2>關於我們</h2>
+        <p>我們是來自 Herricks 高中的學生群組，盡力想要為與技術格隔的人群提供協助。我們的靈感來源於群組成員之一前往醫院探視親人時的驚悚，發現老人最大的困擾是無法使用手機聯絡親人。這一點啟發我們組織了這個頁面，將科技服務帶給少有機會与技術接觸的人。</p>
+    </div>
+
+    <div class="container">
+        <details>
+            <summary>我的設備為何速度很慢？</summary>
+            <p>關閉未使用的應用程式並清除稍後可以提升速度。</p>
+        </details>
+        <details>
+            <summary>我的 WiFi 繞旋不停之前方是什麼？</summary>
+            <p>忘記網路重新連線，或重新啟動資訊局。</p>
+        </details>
+        <details>
+            <summary>如何維持電池？</summary>
+            <p>降低螢幕亮度，關閉背景應用，並停用位置服務。</p>
+        </details>
+        <details>
+            <summary>應用程式無效如何處理？</summary>
+            <p>嘗試更新或重新安裝應用程式，並重新啟動設備。</p>
+        </details>
+        <details>
+            <summary>如果我無法上網我應該怎麼辦？</summary>
+            <p>嘗試重新啟動資訊局或聯繫網路服務提供商。</p>
+        </details>
+    </div>
+
+    <div class="container">
+        <h2>意見送出</h2>
+        <form id="feedbackForm">
+            <textarea id="feedback" placeholder="您的意見..." class="dropdown" rows="4"></textarea>
+            <button type="submit" class="dropdown">送出</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <button id="themeToggle" class="dropdown">切換暗黑模式</button>
+    </div>
+
+    <div class="container">
+        <p class="mobile-notice">手機用戶：請離開聊天機器以便滑動頁面。</p>
+        <div class="chat-container">
+            <div id="webchat" style="width: 100%; height: 100%;"></div>
+        </div>
+    </div>
+
+    <button id="chatbotToggle">開啟聊天機器</button>
+
+    <script>
+        function showAnswer() {
+            let answers = {
+                internet: "嘗試重新啟動資訊局或聯繫網路服務提供商。",
+                slow: "關閉未使用的應用程式並清除稍後。",
+                battery: "降低螢幕亮度，關閉背景應用，並停用位置服務。",
+                wifi: "忘記網路重新連線，或重新啟動資訊局。",
+                software: "更新或重新安裝軟體，重新啟動設備。"
+            };
+            let issue = document.getElementById("issues").value;
+            document.getElementById("answer").textContent = answers[issue] || "";
+        }
+
+        document.getElementById("feedbackForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            alert("謝謝您的意見！");
+        });
+
+        const themeToggle = document.getElementById("themeToggle");
+        themeToggle.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+        });
+
+        const chatbotToggle = document.getElementById("chatbotToggle");
+        chatbotToggle.addEventListener("click", () => {
+            window.botpress.open();
+        });
+
+        console.log("Initializing Botpress...");
+        window.botpress.on("webchat:ready", () => {
+            console.log("Botpress is ready!");
+            setTimeout(() => {
+                window.botpress.open();
+            }, 1000);
+        });
+        window.botpress.init({
+          "botId": "d86f2e7d-be1d-40f5-a8bd-4c75c96ae22c",
+          "configuration": {
+            "composerPlaceholder": "我可以怎麼幫助您？（您使用的是哪種設備）",
+            "botName": "孫子",
+            "botDescription": "我是您孫子的替代人！",
+            "website": {},
+            "email": {
+              "title": "TechBridgeForTheDisconnected@gmail.com",
+              "link": "TechBridgeForTheDisconnected@gmail.com"
+            },
+            "phone": {},
+            "termsOfService": {},
+            "privacyPolicy": {},
+            "color": "#3B82F6",
+            "variant": "solid",
+            "themeMode": "light",
+            "fontFamily": "inter",
+            "radius": 1
+          },
+          "clientId": "36fc36e6-f791-4b02-8086-58654242f322",
+          "selector": "#webchat"
+        });
+    </script>
+</body>
+</html>
