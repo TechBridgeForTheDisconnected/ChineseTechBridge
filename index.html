@@ -13,20 +13,32 @@
       color: #333;
     }
 
-    h1 {
+    .header {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 10px;
       background: linear-gradient(135deg, #3B82F6, #60A5FA);
       color: white;
       padding: 20px;
-      margin: 0;
-      font-size: 2rem;
     }
 
-    h1 img {
-      height: 40px;
-      border-radius: 50%;
+    .logo-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .logo-chinese {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .logo-english {
+      font-size: 1rem;
+      letter-spacing: 1px;
+      opacity: 0.9;
     }
 
     .tabs {
@@ -121,7 +133,8 @@
 
     @media (max-width: 768px) {
       .tab-button { padding: 10px; font-size: 0.9rem; }
-      h1 { font-size: 1.5rem; }
+      .logo-chinese { font-size: 1.5rem; }
+      .logo-english { font-size: 0.8rem; }
       .bp-web-widget {
         width: 100% !important;
         height: 70vh !important;
@@ -134,10 +147,13 @@
 </head>
 <body>
 
-  <h1>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Human-emblem-blue.svg/2048px-Human-emblem-blue.svg.png" alt="Logo">
-    <span>為失聯者搭建科技橋樑</span>
-  </h1>
+  <!-- Updated Header with Text Logo -->
+  <div class="header">
+    <div class="logo-container">
+      <div class="logo-chinese">為失聯者搭建科技橋樑</div>
+      <div class="logo-english">TECH BRIDGE FOR THE DISCONNECTED</div>
+    </div>
+  </div>
 
   <!-- Tab Navigation -->
   <div class="tabs">
