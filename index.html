@@ -14,6 +14,9 @@
     }
 
     h1 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       background: linear-gradient(135deg, #3B82F6, #60A5FA);
       color: white;
       padding: 20px;
@@ -21,11 +24,17 @@
       font-size: 2rem;
     }
 
+    h1 img {
+      height: 40px;
+      border-radius: 50%;
+    }
+
     .tabs {
       display: flex;
       justify-content: center;
       background-color: #e2e8f0;
       border-bottom: 2px solid #cbd5e1;
+      flex-wrap: wrap;
     }
 
     .tab-button {
@@ -103,12 +112,16 @@
 </head>
 <body>
 
-  <h1>為失聯者搭建科技橋樑</h1>
+  <h1>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Human-emblem-blue.svg/2048px-Human-emblem-blue.svg.png" alt="Logo">
+    <span>為失聯者搭建科技橋樑</span>
+  </h1>
 
   <!-- Tab Navigation -->
   <div class="tabs">
     <button class="tab-button active" data-tab="about">關於我們</button>
     <button class="tab-button" data-tab="faq">常見問題</button>
+    <button class="tab-button" data-tab="tutorials">教學</button>
     <button class="tab-button" data-tab="feedback">反饋</button>
     <button class="tab-button" data-tab="chat">聊天機器人</button>
   </div>
@@ -129,6 +142,14 @@
     <details><summary>無法上網怎麼辦？</summary><p>請重啟您的路由器或聯絡您的網路服務供應商。</p></details>
   </div>
 
+  <!-- Tutorials -->
+  <div id="tutorials" class="tab-content">
+    <h2>使用教學</h2>
+    <details><summary>如何進行視訊通話？</summary><p>請打開 LINE、FaceTime 或 Zoom，點選您要聯絡的人，再點選「視訊通話」。</p></details>
+    <details><summary>如何設定鬧鐘？</summary><p>開啟「時鐘」App，點選新增鬧鐘，設定時間並儲存。</p></details>
+    <details><summary>如何安裝新應用程式？</summary><p>打開 App Store 或 Google Play，搜尋您需要的 App 並點選「下載」。</p></details>
+  </div>
+
   <!-- Feedback -->
   <div id="feedback" class="tab-content">
     <h2>給我們反饋</h2>
@@ -146,11 +167,11 @@
     </div>
   </div>
 
+  <!-- Floating Chatbot Button -->
   <button id="chatbotToggle">開啟聊天機器人</button>
 
   <!-- Scripts -->
   <script>
-    // Tab functionality
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
 
@@ -163,23 +184,25 @@
       });
     });
 
-    // Feedback
+    // Feedback submission
     document.getElementById("feedbackForm").addEventListener("submit", function(e) {
       e.preventDefault();
       alert("感謝您的反饋！");
     });
 
-    // Chatbot Button
+    // Chatbot open button logic
     const chatbotToggle = document.getElementById("chatbotToggle");
     chatbotToggle.addEventListener("click", () => {
-      window.botpress.open();
+      if (window.botpress && typeof window.botpress.open === "function") {
+        window.botpress.open();
+      } else {
+        alert("聊天機器人尚未準備好，請稍後再試！");
+      }
     });
 
-    // Botpress Init
+    // Botpress configuration
     window.botpress.on("webchat:ready", () => {
-      setTimeout(() => {
-        window.botpress.open();
-      }, 1000);
+      console.log("Botpress chatbot ready.");
     });
 
     window.botpress.init({
